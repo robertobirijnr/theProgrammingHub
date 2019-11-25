@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>theProgrammersHub</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/stylesheets/blog-home.css" rel="stylesheet">
+  <link href="/stylesheets/blog-post.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  {{>home/home-nav}}
+
+  <!-- Page Content -->
+  <div class="container">
+
+    {{#if errors}}
+
+    {{#each errors}}
+
+    <div class="alert alert-danger">
+
+      {{message}}
+
+    </div>
+    {{/each}}
+
+    {{/if}}
+
+    {{>home/form-msgs}}
+
+    {{{body}}}
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  {{>home/footer}}
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/javascripts/jquery/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+<h1>Edit Category</h1>
+
+<div class="row">
+    <div class="col-sm-4">
+        <form action="/admin/categories/edit/{{category.id}}?_method=PUT" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" value="{{category.name}}" class="form-control" name="name" placeholder="Enter Title">
+
+            </div>
+            <button class="btn btn-primary">Update Category</button>
+        </form>
+    </div>
+
+</div>
