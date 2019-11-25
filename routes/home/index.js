@@ -119,4 +119,12 @@ passport.authenticate('local',{
 })(req,res,next)
 });
 
+//logout
+router.get('/logout',(req,res)=>{
+  req.logOut();
+  res.redirect('/login')
+})
+
+
+
 module.exports = router;

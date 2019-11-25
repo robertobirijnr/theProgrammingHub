@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../../models/categories");
+const { checkAuthentication } = require("../../middlewares/authentication");
 
-router.all("/*", (req, res, next) => {
+router.all("/*", checkAuthentication, (req, res, next) => {
   req.app.locals.layout = "admin";
   next();
 });

@@ -136,6 +136,11 @@
             </div>
           </form>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-user">{{#if user}}{{user.firstName}}{{/if}}</i></i></a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
@@ -147,10 +152,8 @@
     <div class="container-fluid">
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Welcome username </li>
+
+        <li class="breadcrumb-item active">Welcome {{#if user}}{{user.firstName}} {{user.lastName}}{{/if}}</li>
       </ol>
       <div class="row">
         <div class="col-12">

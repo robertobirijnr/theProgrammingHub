@@ -4,21 +4,22 @@ const fs = require("fs");
 const Post = require("../../models/Post");
 const { isEmpty, uploadDir } = require("../../middlewares/upload-helper");
 const Category = require("../../models/categories");
+const { checkAuthentication } = require("../../middlewares/authentication");
 
-router.all("/*", (req, res, next) => {
+router.all("/*", checkAuthentication, (req, res, next) => {
   req.app.locals.layout = "admin";
   next();
 });
 
 router.get("/", (req, res) => {
   Post.find({})
-  .populate('category')
-  .then(posts => {
-    res.render("admin/posts", { posts: posts });
-  });
+    .populate("category")
+    .then(posts => {
+      res.render("admin/posts", { posts: posts });
+    });
 });
 
-router.get("/create", (req, res) => {
+router.get("/create", checkAuthentication, (req, res) => {
   Category.find({}).then(Categories => {
     res.render("admin/posts/create", { Categories });
   });
@@ -97,7 +98,7 @@ router.put("/edit/:id", (req, res) => {
       file.mv("./public/images/" + filename, err => {
         if (err) throw err;
       });
-    } 
+    }
 
     post.save().then(updatedPost => {
       req.flash("success_message", "Post was successfully updated");

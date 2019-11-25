@@ -10,7 +10,7 @@ const upload = require("express-fileupload");
 const session = require("express-session");
 const flash = require("connect-flash");
 const { mongoDbUrl } = require("./config/db");
-const passport = require('passport');
+const passport = require("passport");
 
 mongoose
   .connect(mongoDbUrl, {
@@ -55,14 +55,16 @@ app.use(
 
 //passport
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
 
 //Local variables using middlwares
 app.use(flash());
 app.use((req, res, next) => {
+  res.locals.user = req.user || null;
   res.locals.success_message = req.flash("success_message");
   res.locals.form_errors = req.flash("form-errors");
   res.locals.error_message = req.flash("error_message");
+  res.locals.error = req.flash("error");
   next();
 });
 
