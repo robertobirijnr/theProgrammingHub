@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../../models/Post");
+const Comment = require("../../models/comment");
+const Category = require("../../models/categories");
 const faker = require("faker");
 // const { checkAuthentication } = require("../../middlewares/authentication");
 
@@ -10,7 +12,13 @@ router.all("/*", (req, res, next) => {
 });
 
 router.get("/", (req, res) => {
-  res.render("admin/index");
+  Post.count({}).then(postCount => {
+    Comment.count({}).then(commentCount => {
+      Category.count({}).then(categoryCount => {
+        res.render("admin/index", { postCount, commentCount, categoryCount });
+      });
+    });
+  });
 });
 
 router.post("/generate-fake-posts", (req, res) => {

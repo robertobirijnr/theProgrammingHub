@@ -33,8 +33,8 @@ router.get("/register", (req, res) => {
   res.render("home/register");
 });
 
-router.get("/post/:id", (req, res) => {
-  Post.findOne({ _id: req.params.id })
+router.get("/post/:slug", (req, res) => {
+  Post.findOne({ slug: req.params.slug })
   .populate({path:'comments',match:{approveComment:true}, populate:{path:'user',model:'user'}})
   .populate('user')
   .then(post => {
