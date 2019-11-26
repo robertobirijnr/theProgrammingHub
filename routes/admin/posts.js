@@ -108,9 +108,12 @@ router.put("/edit/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  Post.findOne({ _id: req.params.id }).then(post => {
+  Post.findOne({ _id: req.params.id })
+  .populate('comments')
+  .then(post => {
     post.deleteOne();
     fs.unlink(uploadDir + post.file, err => {
+      
       req.flash("success_message", "Post was successfully Deleted");
       res.redirect("/admin/posts");
     });
