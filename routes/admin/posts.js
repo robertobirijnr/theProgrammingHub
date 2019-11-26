@@ -14,10 +14,17 @@ router.all("/*", checkAuthentication, (req, res, next) => {
 router.get("/", (req, res) => {
   Post.find({})
     .populate("category")
+    .populate('user')
     .then(posts => {
       res.render("admin/posts", { posts: posts });
     });
 });
+
+router.get('/my-posts',(req,res)=>{
+  Post.find({user:req.user.id}).populate('category').then(posts=>{
+    res.render('admin/posts/my-posts',{posts})
+  })
+})
 
 router.get("/create", checkAuthentication, (req, res) => {
   Category.find({}).then(Categories => {
@@ -47,12 +54,14 @@ router.post("/create", (req, res) => {
     allowComments = false;
   }
   const newPost = new Post({
+    user:req.user.id,
     title: req.body.title,
     status: req.body.status,
     allowComments: allowComments,
     body: req.body.body,
     file: filename,
-    category: req.body.category
+    category: req.body.category,
+
   });
 
   newPost
@@ -84,6 +93,7 @@ router.put("/edit/:id", (req, res) => {
     } else {
       allowComments = false;
     }
+    post.user = req.user.id;
     post.title = req.body.title;
     post.status = req.body.status;
     post.allowComments = allowComments;

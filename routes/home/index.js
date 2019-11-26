@@ -14,7 +14,9 @@ router.all("/*", (req, res, next) => {
 
 router.get("/", (req, res) => {
   Post.find({}).then(posts => {
-    Category.find({}).then(categories => {
+    Category.find({})
+    .populate('user')
+    .then(categories => {
       res.render("home/index", { posts, categories });
     });
   });
@@ -34,6 +36,7 @@ router.get("/register", (req, res) => {
 router.get("/post/:id", (req, res) => {
   Post.findOne({ _id: req.params.id })
   .populate({path:'comments',populate:{path:'user',model:'user'}})
+  .populate('user')
   .then(post => {
     Category.find({}).then(categories => {
       res.render("home/post", { post, categories });

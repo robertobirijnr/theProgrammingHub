@@ -14,7 +14,7 @@
 
             <th>Date</th>
             <th>View Posts</th>
-
+            <th colspan="2">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -29,7 +29,12 @@
 
             <td>{{generateTime date 'MMMM Do YYYY'}}</td>
             <td><a href="/post/{{id}}">View</a></td>
+            <td><a href="/admin/posts/edit/{{id}}" class="btn btn-info">Edit</a></td>
+            <td>
+                <form action="/admin/posts/{{id}}?_method=DELETE" method="POST">
 
+                    <button type="submit" class="btn btn-danger">Delete</button></form>
+            </td>
         </tr>
         {{/each}}
     </tbody>
