@@ -15,6 +15,8 @@
   <!-- Custom styles for this template-->
   <link href="/stylesheets/sb-admin.css" rel="stylesheet">
   <link href="/stylesheets/bootstrap-switch.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -173,6 +175,7 @@
     <!-- Logout Modal-->
     {{>admin/logout-model}}
     <!-- Bootstrap core JavaScript-->
+
     <script src="/javascripts/jquery/jquery.min.js"></script>
     <script src="/javascripts/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
@@ -181,8 +184,27 @@
     <script src="/javascripts/sb-admin.min.js"></script>
     {{!-- Bootstrap Switch --}}
     <script src='/javascripts/bootstrap-switch.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+      integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
     <script>
       $("[name='approveComment']").bootstrapSwitch();
+
+      $(document).ready(() => {
+        $("[name='approveComment']").on('switchChange.bootstrapSwitch', function (e, data) {
+
+          const id = $(this).attr('data-id');
+
+          $.ajax({
+            type: "POST",
+            url: '/admin/comments/approve-comment',
+            data: { id: id, approveComment: data },
+            cache: false,
+            success: function (data) {
+              toastr["success"](`Comment with id ${data._id} was updated`)
+            }
+          })
+        })
+      })
     </script>
   </div>
 </body>

@@ -25,6 +25,10 @@ router.post("/", (req, res) => {
     post.comments.push(newComment);
     post.save().then(savePost => {
       newComment.save().then(saveComment => {
+        req.flash(
+          "success_message",
+          "Your comment will be reviewed in a moment"
+        );
         res.redirect(`/post/${post.id}`);
       });
     });
@@ -33,13 +37,26 @@ router.post("/", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   Comment.deleteOne({ _id: req.params.id }).then(deleteItem => {
-
-    Post.findOneAndUpdate({comments:req.params.id},{$pull:{comments:req.params.id}},(err,data)=>{
-      if(err) console.log(err)
-      res.redirect("/admin/comments");
-    })
- 
+    Post.findOneAndUpdate(
+      { comments: req.params.id },
+      { $pull: { comments: req.params.id } },
+      (err, data) => {
+        if (err) console.log(err);
+        res.redirect("/admin/comments");
+      }
+    );
   });
+});
+
+router.post("/approve-comment", (req, res) => {
+  Comment.findByIdAndUpdate(
+    req.body.id,
+    { $set: { approveComment: req.body.approveComment } },
+    (err, result) => {
+      if (err) return err;
+      res.send(result);
+    }
+  );
 });
 
 module.exports = router;
