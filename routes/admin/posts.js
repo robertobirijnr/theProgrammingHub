@@ -111,11 +111,19 @@ router.delete("/:id", (req, res) => {
   Post.findOne({ _id: req.params.id })
   .populate('comments')
   .then(post => {
-    post.deleteOne();
+    
     fs.unlink(uploadDir + post.file, err => {
-      
-      req.flash("success_message", "Post was successfully Deleted");
-      res.redirect("/admin/posts");
+      if(!post.comments.length < 1){
+        post.comments.forEach(comment=>{
+          comment.remove();
+        })
+      }
+
+      post.deleteOne().then(postRemove=>{
+        req.flash("success_message", "Post was successfully Deleted");
+        res.redirect("/admin/posts");
+      });
+     
     });
   });
 });

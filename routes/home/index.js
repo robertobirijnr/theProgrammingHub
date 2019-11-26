@@ -32,7 +32,9 @@ router.get("/register", (req, res) => {
 });
 
 router.get("/post/:id", (req, res) => {
-  Post.findOne({ _id: req.params.id }).then(post => {
+  Post.findOne({ _id: req.params.id })
+  .populate({path:'comments',populate:{path:'user',model:'user'}})
+  .then(post => {
     Category.find({}).then(categories => {
       res.render("home/post", { post, categories });
     });
