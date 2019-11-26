@@ -2,7 +2,8 @@
 <table class="table">
     <thead>
         <th>id</th>
-        <th>owner</th>
+        <th>Owner</th>
+        <th>Status</th>
         <th>Date</th>
         <th>Action</th>
     </thead>
@@ -11,6 +12,7 @@
         <tr>
             <th>{{id}}</th>
             <th>{{user.firstName}}</th>
+            <td><input type="checkbox" name="approveComment"></td>
             <th>{{generateTime date 'MMMM Do YYYY'}}</th>
             <td>
                 <form action="/admin/comments/{{id}}?_method=DELETE" method="POST">
