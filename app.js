@@ -23,7 +23,11 @@ mongoose
   });
 
 const app = express();
-const { select, generateTime } = require("./middlewares/handlebars-helpers");
+const {
+  select,
+  generateTime,
+  paginate
+} = require("./middlewares/handlebars-helpers");
 
 app.use(upload());
 
@@ -32,7 +36,7 @@ app.engine(
   "handlebars",
   exhbs({
     defaultLayout: "home",
-    helpers: { select: select, generateTime: generateTime }
+    helpers: { select: select, generateTime: generateTime, paginate: paginate }
   })
 );
 app.set("view engine", "handlebars");
