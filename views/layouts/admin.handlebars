@@ -194,10 +194,10 @@
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Post', 'Comments', 'Categories', 'Green', 'Purple', 'Orange'],
+          labels: ['Post', 'Comments', 'Categories'],
           datasets: [{
             label: 'thePrommersHub',
-            data: [{{ postCount }}, {{ commentCount }}, {{ categoryCount }}, 5, 2, 3],
+            data: [{{ postCount }}, {{ commentCount }}, {{ categoryCount }}],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',

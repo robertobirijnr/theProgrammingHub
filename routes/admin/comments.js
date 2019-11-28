@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../../models/Post");
 const Comment = require("../../models/comment");
+const { checkAuthentication } = require("../../middlewares/authentication");
 
-router.all("/*", (req, res, next) => {
+router.all("/*", checkAuthentication,(req, res, next) => {
   req.app.locals.layout = "admin";
   next();
 });

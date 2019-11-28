@@ -9,18 +9,16 @@ const methodoverride = require("method-override");
 const upload = require("express-fileupload");
 const session = require("express-session");
 const flash = require("connect-flash");
-const { mongoDbUrl } = require("./config/db");
+const { mongoDbConnector } = require("./config/db");
 const passport = require("passport");
 
 mongoose
-  .connect(mongoDbUrl, {
-    createIndexes: false,
+  .connect(mongoDbConnector, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useCreateIndex: true,
+    useFindAndModify: false
   })
-  .then(con => {
-    console.log("connection successful");
-  });
+  .then(() => console.log('DB connection successful!'));
 
 const app = express();
 const {
