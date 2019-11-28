@@ -3,23 +3,15 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const exhbs = require("express-handlebars");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const methodoverride = require("method-override");
 const upload = require("express-fileupload");
 const session = require("express-session");
 const flash = require("connect-flash");
-const { mongoDbConnector } = require("./config/db");
+
 const passport = require("passport");
 
-mongoose
-  .connect(mongoDbConnector, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('DB connection successful!'));
+
 
 const app = express();
 const {
